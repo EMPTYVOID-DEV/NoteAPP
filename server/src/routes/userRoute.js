@@ -9,24 +9,20 @@ const route = Router();
 // intial load get everything
 route.get("/", GetData);
 
-//create new note
+//create new or update note
 
-route.post("/note", upload.array("images", 5), noteController.createNote);
+route.post("/note", upload.single("image"), noteController.createNote);
 
 //delete note
 
-route.delete("/note", noteController.deleteNote);
+route.delete("/note/:noteid", noteController.deleteNote);
 
-//add a tag
+//add or update a tag
 
-route.post("/tag", tagController.addTag);
+route.post("/tag", tagController.addOrEditTag);
 
 // delete a tag
 
-route.delete("/tag", tagController.deleteTag);
-
-//update a tag
-
-route.put("/tag", tagController.updateTag);
+route.delete("/tag/:key", tagController.deleteTag);
 
 export default route;

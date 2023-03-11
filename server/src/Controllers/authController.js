@@ -20,21 +20,26 @@ const userResponse = async (res, userid) => {
 
 const register = async (req, res) => {
   const isExist = await userModel.findOne({ email: req.body.email });
-  if (isExist) return res.status(403).send({ message: "user already exists" });
+  if (isExist) return res.status(404).send({ message: "user already exists" });
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  const newUser = await userModel
-    .create({ email: req.body.email, password: hashedPassword })
-    .catch(() => {
-      return res.status(503).send();
+  let newUser = null;
+  try {
+    newUser = await userModel.create({
+      email: req.body.email,
+      password: hashedPassword,
     });
+  } catch (error) {
+    return res.status(503).send();
+  }
   userResponse(res, newUser._id);
 };
 const login = async (req, res) => {
-  const oldUser = await userModel
-    .findOne({ email: req.body.email })
-    .catch((err) => {
-      return res.status(503).send(err);
-    });
+  let oldUser = null;
+  try {
+    oldUser = await userModel.findOne({ email: req.body.email });
+  } catch (error) {
+    return res.status(503).send();
+  }
   if (!oldUser) return res.status(404).send();
   const isValid = await bcrypt.compare(req.body.password, oldUser.password);
   if (isValid) {

@@ -21,9 +21,9 @@ const user = new mongoose.Schema({
         type: String,
         required: true,
       },
-      ImagesPaths: {
-        type: [String],
-        default: [],
+      ImagePath: {
+        type: String,
+        default: "",
       },
       tags: {
         type: [String],

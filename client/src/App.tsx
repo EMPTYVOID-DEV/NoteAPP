@@ -1,34 +1,25 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import "./App.css";
+import Intail from "./intial";
+import { Routes, Route, useNavigate } from "react-router";
+import HomeProxy from "./pages/home/HomeProxy";
+import NewOrEdit from "./pages/NewOrEdit/NewOrEdit";
+import ShowNote from "./pages/ShowNote/ShowNote";
+import SecureRoute from "./secureRoute";
+import Auth from "./pages/auth/auth";
 
 function App() {
-  const [img, setimg] = useState<any>(null);
-  const send = async (e: any) => {
-    e.preventDefault();
-    // const fd = new FormData();
-    // // fd.append("email", "aymen@gmail,com");
-    // // fd.append("password", "password");
-    fetch("/api/user ", {
-      method: "POST",
-      body: JSON.stringify({ email: "aymen@gmail.com", password: "password" }),
-      headers: {
-        Accept: "application/json",
-        "content-type": "application/json",
-      },
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => console.log(data))
-      .catch((err) => {
-        console.log(`${err} unable to register`);
-      });
-  };
   return (
-    <div className="App">
-      <button onClick={send}>send</button>
-    </div>
+    <Routes>
+      <Route path="/" element={<Intail />} />
+      <Route element={<SecureRoute />}>
+        <Route path="/home" element={<HomeProxy />} />
+        <Route path="/new" element={<NewOrEdit isEdit={false} />} />
+        <Route path="/note/:id">
+          <Route index element={<ShowNote />} />
+          <Route path="edit" element={<NewOrEdit isEdit={true} />} />
+        </Route>
+      </Route>
+      <Route path="*" element={<Auth />} />
+    </Routes>
   );
 }
 

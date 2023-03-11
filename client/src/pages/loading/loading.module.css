@@ -1,0 +1,29 @@
+@keyframes rotate {
+  from {
+    rotate: 0;
+  }
+  to {
+    rotate: 360deg;
+  }
+}
+
+.loading {
+  background-color: #ecb1db;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > .circle {
+    width: 70px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 5px solid #c215c2c0;
+    border-bottom-left-radius: 0;
+    border-bottom: none;
+    border-left: none;
+    background-color: transparent;
+    animation: rotate 2s linear infinite forwards;
+  }
+}
