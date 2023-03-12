@@ -45,3 +45,31 @@ export const deleteTag = async (req, res) => {
   }
   res.status(200).send();
 };
+
+export const replaceTags = async (req, res) => {
+  const id = req.userid;
+  let { Tags } = req.body;
+  if (!Tags) return res.status(400).send();
+  let user = null;
+  try {
+    user = await userModel.findById(id);
+  } catch (error) {
+    return res.status(503).send();
+  }
+  Tags = new Map(Object.entries(Tags));
+
+  for (const [key, val] of user.notes.entries()) {
+    val.tags = val.tags.filter((el) => {
+      return Tags.has(el);
+    });
+
+    user.notes.set(key, val);
+  }
+  user.tags = Tags;
+  try {
+    await user.save();
+  } catch (error) {
+    return res.status(503).send();
+  }
+  res.status(200).send();
+};

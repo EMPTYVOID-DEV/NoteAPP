@@ -8,10 +8,8 @@ export const GetData = async (req, res) => {
   } catch (error) {
     return res.status(503).send();
   }
-  res
-    .status(200)
-    .send({
-      tags: Object.fromEntries(data.tags),
-      notes: Object.fromEntries(data.notes),
-    });
+  res.status(200).send({
+    tags: Object.fromEntries(data.tags),
+    notes: Object.fromEntries(data.notes),
+  });
 };

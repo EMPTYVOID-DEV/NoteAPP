@@ -10,7 +10,7 @@ dotenv.config({
 const userResponse = async (res, userid) => {
   const refresh = createRefreshToken({ userid: userid });
   const access = createAccessToken({ userid: userid });
-  res.cookie("api_auth", refresh, {
+  res.cookie("apiauth", refresh, {
     httpOnly: true,
     secure: false,
   });
@@ -50,7 +50,7 @@ const login = async (req, res) => {
 };
 
 const refresh = async (req, res) => {
-  const clientToken = req.cookies.api_auth;
+  const clientToken = req.cookies.apiauth;
   let payload = null;
   if (!clientToken) return res.status(401).send();
   try {

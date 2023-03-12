@@ -1,9 +1,4 @@
-import {
-  useTagStore,
-  useNoteStore,
-  useTokenStore,
-} from "../../utils/zustandStore";
-import { apiTagDelete, apiTagUpdateOrCreate } from "../../utils/apiFunctions";
+import { useTagStore, useNoteStore } from "../../utils/zustandStore";
 import makeAnimated from "react-select/animated";
 import Select from "react-select/";
 import styles from "./Home.module.css";
@@ -11,21 +6,19 @@ import { useNavigate } from "react-router";
 import { NoteTagMapper } from "../../utils/regularFucntions";
 import { useState } from "react";
 import { note } from "../../utils/types";
+import EditTags from "../editTags/EditTags";
 
 export default function Home() {
-  const { token, update, hasExpired } = useTokenStore((state) => state);
   const navigate = useNavigate();
-  const [tags, pushTag, deleTag] = useTagStore((state) => [
-    state.tags,
-    state.push,
-    state.delete,
-  ]);
+  const [edit, SetEdit] = useState<boolean>(false);
+  const [tags] = useTagStore((state) => [state.tags]);
   const RawNotes = useNoteStore((state) => state.notes); // base notes from db with tag ids
   let baseNotes = NoteTagMapper(RawNotes, tags); /// base notes from db with tag values instead to ui rendering
   const [listOfNotes, filterNotes] =
     useState<{ id: string; note: note }[]>(baseNotes); // filtered notes
   return (
     <div className={styles.home}>
+      {edit ? <EditTags SetAppearence={SetEdit} /> : null}
       <div className={styles.firstLayer}>
         <h2>Noteable</h2>
         <div>
@@ -36,7 +29,7 @@ export default function Home() {
           >
             New Note
           </button>
-          <button>Edit Tags</button>
+          <button onClick={() => SetEdit(true)}>Edit Tags</button>
         </div>
       </div>
       <div>
@@ -93,15 +86,24 @@ export default function Home() {
         </div>
         <div className={styles.notesLayer}>
           {listOfNotes.map((note) => (
-            <div key={note.id} className={styles.note} data-id={note.id}>
+            <div
+              key={note.id}
+              className={styles.note}
+              data-id={note.id}
+              onClick={() => navigate(`/note/${note.id}`)}
+            >
               <img src={`/api/static/imgs/${note.note.ImagePath}`} />
               <div className={styles.title}>{note.note.title}</div>
               <div className={styles.tags}>
-                {note.note.tags.map((tag, idx) => (
-                  <span key={tag + idx} className={styles.tag}>
-                    {tag}
-                  </span>
-                ))}
+                {note.note.tags.map((tag, idx) => {
+                  if (idx < 5) {
+                    return (
+                      <span key={tag + idx} className={styles.tag}>
+                        {tag}
+                      </span>
+                    );
+                  }
+                })}
               </div>
             </div>
           ))}

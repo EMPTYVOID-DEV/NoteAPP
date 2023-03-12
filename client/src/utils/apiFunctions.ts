@@ -88,20 +88,20 @@ export const apiNoteUpdateorCreate = async (
   navigate: any,
   noteid: string,
   note: note,
-  image?: File
+  image: File
 ) => {
   try {
     const fd = new FormData();
     fd.append("id", noteid);
     fd.append("note", JSON.stringify(note));
-    // fd.append("image", image, note.ImagePath);
+    fd.append("image", image, note.ImagePath);
     await axios.post("/api/user/note", fd, {
       headers: {
         authentication: `bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
     });
-    push(note, noteid);
+    // push(note, noteid);
   } catch (error) {
     navigate("/", { state: true });
   }
@@ -152,8 +152,29 @@ export const apiNoteDelete = async (
     await axios.delete(`/api/user/note/${noteid}`, {
       headers: { authentication: `bearer ${token}` },
     });
-    delet(noteid);
   } catch (error) {
+    navigate("/", { state: true });
+  }
+};
+
+export const ReplaceTags = async (
+  newtags: Map<string, string>,
+  token: string,
+  navigate: any
+) => {
+  try {
+    await axios.post(
+      "/api/user/tags",
+      {
+        Tags: Object.fromEntries(newtags),
+      },
+      {
+        headers: { authentication: `bearer ${token}` },
+      }
+    );
+    navigate(0);
+  } catch (error) {
+    console.log(error);
     navigate("/", { state: true });
   }
 };

@@ -25,4 +25,6 @@ route.post("/tag", tagController.addOrEditTag);
 
 route.delete("/tag/:key", tagController.deleteTag);
 
+route.post("/tags", tagController.replaceTags);
+
 export default route;
