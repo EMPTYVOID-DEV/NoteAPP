@@ -10,7 +10,6 @@ import { NoteTagMapper } from "../../utils/regularFucntions";
 
 export default function ShowNote() {
   let { id } = useParams();
-  const nav = useNavigate();
   let [note, delet] = useNoteStore((state) => [
     state.search(id as string),
     state.delete,
@@ -45,7 +44,7 @@ export default function ShowNote() {
         <div>
           <button
             onClick={() => {
-              nav(`/note/${id}/edit`);
+              navigate(`/note/${id}/edit`);
             }}
           >
             Edit
@@ -53,7 +52,7 @@ export default function ShowNote() {
           <button onClick={deleteNote}>Delete</button>
           <button
             onClick={() => {
-              nav("/");
+              navigate("/");
             }}
           >
             Back
@@ -62,7 +61,11 @@ export default function ShowNote() {
       </div>
       <div className={style.secondLayer}>
         <div>{note.content}</div>
-        <img src={`/api/static/imgs/${note.ImagePath}`} alt="oops" />
+        <img
+          src={`/api/static/imgs/${note.ImagePath}?${new Date().getTime()}`}
+          alt="oops"
+          style={{ display: `${note.ImagePath === "" ? "none" : "block"}` }}
+        />
       </div>
     </div>
   );

@@ -41,7 +41,7 @@
 
       &:hover {
         & > img {
-          filter: grayscale(0.6);
+          filter: hue-rotate(240deg) sepia(30%);
         }
       }
 

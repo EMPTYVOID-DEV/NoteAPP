@@ -56,6 +56,9 @@
 }
 .note > .firstLayer > div:last-child > button {
   width: 5vw;
+  box-sizing: content-box;
+  padding-block: 2px;
+  padding-inline: 6px;
   aspect-ratio: 2/1;
   font-size: 1rem;
   font-weight: medium;
@@ -101,7 +104,7 @@
   & > div {
     width: 100%;
     font-size: 1rem;
-    font-weight: medium;
+    font-weight: 600;
     font-family: Arial, Helvetica, sans-serif;
     letter-spacing: 0.8px;
     line-height: 30px;

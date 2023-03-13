@@ -16,6 +16,7 @@ export default function Home() {
   let baseNotes = NoteTagMapper(RawNotes, tags); /// base notes from db with tag values instead to ui rendering
   const [listOfNotes, filterNotes] =
     useState<{ id: string; note: note }[]>(baseNotes); // filtered notes
+  console.log(listOfNotes[0]);
   return (
     <div className={styles.home}>
       {edit ? <EditTags SetAppearence={SetEdit} /> : null}
@@ -92,7 +93,14 @@ export default function Home() {
               data-id={note.id}
               onClick={() => navigate(`/note/${note.id}`)}
             >
-              <img src={`/api/static/imgs/${note.note.ImagePath}`} />
+              <img
+                src={`/api/static/imgs/${
+                  note.note.ImagePath
+                }?${new Date().getTime()}`}
+                style={{
+                  display: `${note.note.ImagePath === "" ? "none" : "block"}`,
+                }}
+              />
               <div className={styles.title}>{note.note.title}</div>
               <div className={styles.tags}>
                 {note.note.tags.map((tag, idx) => {

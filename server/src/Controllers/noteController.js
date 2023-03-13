@@ -3,6 +3,7 @@ import userModel from "../models/user.js";
 export const createNote = async (req, res) => {
   const _id = req.userid;
   const note = JSON.parse(req.body.note);
+  console.log(note);
   let user = null;
   try {
     user = await userModel.findById(_id);

@@ -83,31 +83,28 @@ export const getNotes = async (
   }
 };
 export const apiNoteUpdateorCreate = async (
-  push: (val: note, id: string) => void,
   token: string,
   navigate: any,
   noteid: string,
   note: note,
-  image: File
+  img: File | null
 ) => {
+  let fd = new FormData();
+  fd.append("id", noteid);
+  fd.append("note", JSON.stringify(note));
+  if (img !== null) fd.append("image", img, note.ImagePath);
   try {
-    const fd = new FormData();
-    fd.append("id", noteid);
-    fd.append("note", JSON.stringify(note));
-    fd.append("image", image, note.ImagePath);
     await axios.post("/api/user/note", fd, {
       headers: {
         authentication: `bearer ${token}`,
-        "Content-Type": "multipart/form-data",
+        "content-type": "multipart/form-data",
       },
     });
-    // push(note, noteid);
   } catch (error) {
     navigate("/", { state: true });
   }
 };
 export const apiTagUpdateOrCreate = async (
-  push: (val: string, key: string) => void,
   val: string,
   key: string,
   token: string,
@@ -121,7 +118,6 @@ export const apiTagUpdateOrCreate = async (
         headers: { authentication: `bearer ${token}` },
       }
     );
-    push(val, key);
   } catch (error) {
     console.log(error);
     navigate("/", { state: true });
