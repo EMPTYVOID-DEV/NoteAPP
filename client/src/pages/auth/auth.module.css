@@ -306,21 +306,16 @@
       color: #121212;
     }
     & > .header:first-child {
-      background: radial-gradient(
-        circle at 100%,
-        #ce13ce,
-        #800385f0 50%,
-        #620e9bf0 75%,
-        #5c073627 85%
-      );
+      background: linear-gradient(to left, #620e9bf0, #ce13ce 10%, #620e9bf0);
       background-size: 200%;
       background-clip: text;
       -webkit-background-clip: text;
+      overflow: hidden;
       color: transparent;
       font-family: Rockybilly;
       font-size: clamp(42px, calc(6vw+21px), 60px);
       font-weight: bolder;
-      animation: coloring 2s linear 1.5s infinite normal forwards;
+      animation: coloring 2s linear 0.5s infinite normal forwards;
     }
   }
 }

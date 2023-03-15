@@ -137,10 +137,16 @@ export default function NewOrEdit({ isEdit }: { isEdit: boolean }) {
         <div>
           <img
             ref={imgRef}
-            style={{ display: `${img ? "block" : "none"}` }}
+            style={{
+              display: `${img || noteinfo.ImagePath !== "" ? "block" : "none"}`,
+            }}
             src={`/api/static/imgs/${noteinfo.ImagePath}`}
           />
-          <span style={{ display: `${img ? "none" : "block"}` }}>
+          <span
+            style={{
+              display: `${img || noteinfo.ImagePath !== "" ? "none" : "block"}`,
+            }}
+          >
             no image has been uploaded yet
           </span>
         </div>
