@@ -76,7 +76,7 @@
       background-image: url("C:/Users/hp/Documents/study/OwnStudy/Projects/NoteApp/client/src/assets/woods2.jpg");
       background-position: center;
       background-size: 300%;
-      filter: sepia(30%) hue-rotate(150deg);
+      filter: hue-rotate(80deg) contrast(0.8);
       animation: shift 24s linear forwards infinite;
     }
     & > .overlay {
