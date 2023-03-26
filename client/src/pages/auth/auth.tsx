@@ -1,20 +1,11 @@
 import { FormEvent, useRef, useState } from "react";
 import styles from "./auth.module.css";
 import { authenicate } from "../../utils/apiFunctions";
-
 import { useTokenStore } from "../../utils/zustandStore";
 import { useNavigate } from "react-router-dom";
 import { passwordChecker, emailChecker } from "../../utils/regularFucntions";
-
+import PasswordStrength from "./passwordStrength";
 type phase = "form" | "login" | "register";
-const passwordStrengthUi = [
-  "Very Weak",
-  "Weak",
-  "Medium",
-  "Good",
-  "Strong",
-  "",
-];
 
 export default function Auth() {
   const [authorizePhase, changePhase] = useState<phase>("form");
@@ -26,10 +17,8 @@ export default function Auth() {
 
   const formHandler = async (e: FormEvent, islogin: boolean) => {
     e.preventDefault();
-    if (!passwordChecker(userInfo.current.password)) return;
-    if (!emailChecker(userInfo.current.email))
-      return SetError("email is not valid");
-    changeStrength(7);
+    if (errorMessage === "Email is not valid" || passwordStrength < 3) return;
+    changeStrength(5);
     const res = await authenicate(
       userInfo.current.email,
       userInfo.current.password,
@@ -44,7 +33,6 @@ export default function Auth() {
       SetError(res.message);
     }
   };
-
   const FormView =
     authorizePhase === "form" ? (
       <div className={styles.form}>
@@ -73,6 +61,10 @@ export default function Auth() {
           defaultValue={userInfo.current.email}
           onChange={(e) => {
             userInfo.current.email = e.target.value;
+            if (!emailChecker(e.target.value)) SetError("Email is not valid");
+            else {
+              SetError("no error");
+            }
           }}
         />
         <input
@@ -85,7 +77,12 @@ export default function Auth() {
             userInfo.current.password = e.target.value;
           }}
         />
-        {errorMessage !== "no error" ? <div>{errorMessage}</div> : null}
+        {errorMessage !== "no error" ? (
+          <div className={styles.error}>
+            <i className="fas fa-exclamation-triangle"></i>
+            {errorMessage}
+          </div>
+        ) : null}
         <div>
           <button onClick={(e) => formHandler(e, true)}>Login in</button>
           <span>
@@ -109,6 +106,10 @@ export default function Auth() {
           defaultValue={userInfo.current.email}
           onChange={(e) => {
             userInfo.current.email = e.target.value;
+            if (!emailChecker(e.target.value)) SetError("Email is not valid");
+            else {
+              SetError("no error");
+            }
           }}
         />
         <input
@@ -122,36 +123,13 @@ export default function Auth() {
             changeStrength(passwordChecker(e.target.value));
           }}
         />
-        <div className={styles.passwordStrength}>
-          <div>
-            <div
-              style={{
-                opacity:
-                  passwordStrength < 1 || passwordStrength > 6 ? "0" : "1",
-              }}
-            ></div>
-            <div
-              style={{
-                opacity:
-                  passwordStrength < 2 || passwordStrength > 6 ? "0" : "1",
-              }}
-            ></div>
-            <div
-              style={{
-                opacity:
-                  passwordStrength < 3 || passwordStrength > 6 ? "0" : "1",
-              }}
-            ></div>
-            <div
-              style={{
-                opacity:
-                  passwordStrength < 4 || passwordStrength > 6 ? "0" : "1",
-              }}
-            ></div>
+        <PasswordStrength passwordStrength={passwordStrength} />
+        {errorMessage !== "no error" ? (
+          <div className={styles.error}>
+            <i className="fas fa-exclamation-triangle"></i>
+            {errorMessage}
           </div>
-          <span>{passwordStrengthUi[passwordStrength]}</span>
-        </div>
-        {errorMessage !== "no error" ? <div>{errorMessage}</div> : null}
+        ) : null}
         <div>
           <button onClick={(e) => formHandler(e, false)}>Sign Up</button>
           <span>

@@ -16,7 +16,6 @@ export default function Home() {
   let baseNotes = NoteTagMapper(RawNotes, tags); /// base notes from db with tag values instead to ui rendering
   const [listOfNotes, filterNotes] =
     useState<{ id: string; note: note }[]>(baseNotes); // filtered notes
-  console.log(listOfNotes[0]);
   return (
     <div className={styles.home}>
       {edit ? <EditTags SetAppearence={SetEdit} /> : null}

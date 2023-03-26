@@ -72,7 +72,6 @@ export default function NewOrEdit({ isEdit }: { isEdit: boolean }) {
       navigate("/home");
     }
   };
-
   return (
     <div className={styles.NewOrEdit}>
       <div className={styles.firstLayer}>

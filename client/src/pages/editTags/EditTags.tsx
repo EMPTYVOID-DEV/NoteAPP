@@ -61,11 +61,8 @@ export default function EditTags({
                 onChange={updateHandler}
                 data-index={idx}
               />
-              <span>
-                <i
-                  className="fa-solid fa-trash-can"
-                  onClick={deleteHandler}
-                ></i>
+              <span onClick={deleteHandler}>
+                <i className="fa-solid fa-trash-can"></i>
               </span>
             </div>
           ))}

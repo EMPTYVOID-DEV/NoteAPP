@@ -13,7 +13,10 @@ export default function HomeProxy() {
   const navigate = useNavigate();
   const [isLoading, SetLoading] = useState(true);
   const state = useTokenStore((state) => state);
-  const [intailnotes] = useNoteStore((state) => [state.intail]);
+  const [intailnotes, notes] = useNoteStore((state) => [
+    state.intail,
+    state.notes,
+  ]);
   const [intailtags] = useTagStore((state) => [state.intail]);
   const intialFetch = async () => {
     const token = await refreshToken(
@@ -22,7 +25,7 @@ export default function HomeProxy() {
       state.update,
       state.token
     );
-    if (token) {
+    if (token && notes.size !== 0) {
       await getNotes(intailnotes, intailtags, token, navigate);
       SetLoading(false);
     }

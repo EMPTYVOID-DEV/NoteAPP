@@ -27,17 +27,17 @@ export const authenicate: (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (!error.response?.status)
-        return { message: "network error", status: 405 };
+        return { message: "Network error", status: 405 };
 
       if (error.response?.status === 503)
-        return { status: 503, message: "database is down" };
+        return { status: 503, message: "Database is down" };
       if (error.response?.status === 404)
         return {
-          message: `${isLogin ? "user not found" : "user already exist"}`,
+          message: `${isLogin ? "User not found" : "user already exist"}`,
           status: 404,
         };
       if (error.response?.status === 403)
-        return { message: "password is incorrect", status: 403 };
+        return { message: "Password is incorrect", status: 403 };
     }
     return { message: "other error", status: 400 };
   }
