@@ -62,7 +62,7 @@ export default function ShowNote() {
       <div className={style.secondLayer}>
         <div>{note.content}</div>
         <img
-          src={`/api/static/imgs/${note.ImagePath}?${new Date().getTime()}`}
+          src={`/api/static/imgs/${note.ImagePath}`}
           alt="oops"
           style={{ display: `${note.ImagePath === "" ? "none" : "block"}` }}
         />

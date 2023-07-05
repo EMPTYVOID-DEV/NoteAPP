@@ -15,10 +15,16 @@ export default function Auth() {
   const userInfo = useRef({ email: "", password: "" });
   const navagate = useNavigate();
 
+  const passwordCheck = (islogin: boolean) => {
+    if (errorMessage === "Email is not valid") return false;
+    if (!islogin && passwordStrength < 3) return false;
+    changeStrength(5);
+    return true;
+  };
+
   const formHandler = async (e: FormEvent, islogin: boolean) => {
     e.preventDefault();
-    if (errorMessage === "Email is not valid" || passwordStrength < 3) return;
-    changeStrength(5);
+    if (!passwordCheck(islogin)) return;
     const res = await authenicate(
       userInfo.current.email,
       userInfo.current.password,
@@ -84,11 +90,21 @@ export default function Auth() {
           </div>
         ) : null}
         <div>
-          <button onClick={(e) => formHandler(e, true)}>Login in</button>
+          <button
+            onClick={(e) => {
+              if (userInfo.current.password == "") {
+                return SetError("Please enter your password");
+              }
+              formHandler(e, true);
+            }}
+          >
+            Login in
+          </button>
           <span>
             new user?
             <span
               onClick={() => {
+                SetError("no error");
                 changePhase("register");
               }}
             >
@@ -136,6 +152,7 @@ export default function Auth() {
             already have an account?
             <span
               onClick={() => {
+                SetError("no error");
                 changePhase("login");
               }}
             >

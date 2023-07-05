@@ -20,9 +20,8 @@ export default function EditTags({
       state.update,
       state.token
     );
-    if (newTags.length === 0) {
-      SetAppearence(false);
-    } else if (token) {
+
+    if (token) {
       ReplaceTags(new Map(newTags), token, navigate);
     }
   };

@@ -23,6 +23,7 @@ export default function NewOrEdit({ isEdit }: { isEdit: boolean }) {
   const state = useTokenStore((state) => state);
   const navigate = useNavigate();
   const [img, setImg] = useState<File | null>(null);
+  const [error, setError] = useState("");
   const [noteinfo, changeNote] = useState<note>(() => {
     return isEdit
       ? search(id as string)
@@ -35,6 +36,20 @@ export default function NewOrEdit({ isEdit }: { isEdit: boolean }) {
   });
   const [tags, push] = useTagStore((state) => [state.tags, state.push]);
 
+  const CheckFields = () => {
+    if (noteinfo.title == "") {
+      setError("Title is missing");
+      return false;
+    } else if (noteinfo.tags.length == 0) {
+      setError("Tags list is empty");
+      return false;
+    } else if (noteinfo.content == "") {
+      setError("Content is missing");
+      return false;
+    }
+    return true;
+  };
+
   const createTagHandle = async (newOption: string) => {
     let key = v4();
     const token = await refreshToken(
@@ -44,12 +59,13 @@ export default function NewOrEdit({ isEdit }: { isEdit: boolean }) {
       state.token
     );
     if (token) {
-      await apiTagUpdateOrCreate(newOption, key, state.token, navigate);
+      await apiTagUpdateOrCreate(newOption, key, token, navigate);
       push(newOption, key);
     }
   };
 
   const createNoteHandle = async () => {
+    if (!CheckFields()) return;
     const token = await refreshToken(
       navigate,
       state.hasExpired,
@@ -58,9 +74,7 @@ export default function NewOrEdit({ isEdit }: { isEdit: boolean }) {
     );
     if (token) {
       const path = img
-        ? isEdit
-          ? noteinfo.ImagePath.split(".")[0] + "." + img?.name.split(".")[1]
-          : v4() + "." + img.name.split(".")[1]
+        ? v4() + "." + img?.name.split(".")[1]
         : noteinfo.ImagePath;
       await apiNoteUpdateorCreate(
         token,
@@ -162,6 +176,14 @@ export default function NewOrEdit({ isEdit }: { isEdit: boolean }) {
           <label htmlFor={"image"}>Upload Your Image</label>
         </div>
       </div>
+      {error == "" ? (
+        ""
+      ) : (
+        <div id={styles.error}>
+          <i className="fas fa-exclamation-triangle"></i>
+          {error}
+        </div>
+      )}
       <div className={styles.lastLayer}>
         <button onClick={() => navigate("/home")}>Cancel</button>
         <button onClick={createNoteHandle}>{isEdit ? "Edit" : "Create"}</button>

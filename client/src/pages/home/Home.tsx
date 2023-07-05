@@ -93,9 +93,7 @@ export default function Home() {
               onClick={() => navigate(`/note/${note.id}`)}
             >
               <img
-                src={`/api/static/imgs/${
-                  note.note.ImagePath
-                }?${new Date().getTime()}`}
+                src={`/api/static/imgs/${note.note.ImagePath}`}
                 style={{
                   display: `${note.note.ImagePath === "" ? "none" : "block"}`,
                 }}

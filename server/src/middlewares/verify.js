@@ -1,7 +1,13 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import path from "path";
+import * as url from "url";
+
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+const envPath = path.join(__dirname, "../../.env");
+
 dotenv.config({
-  path: "C:/Users/hp/Documents/study/OwnStudy/Projects/NoteApp/server/.env",
+  envPath,
 });
 
 export const verify = (req, res, next) => {

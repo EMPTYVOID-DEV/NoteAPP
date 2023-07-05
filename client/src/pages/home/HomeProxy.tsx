@@ -25,7 +25,7 @@ export default function HomeProxy() {
       state.update,
       state.token
     );
-    if (token && notes.size !== 0) {
+    if (token) {
       await getNotes(intailnotes, intailtags, token, navigate);
       SetLoading(false);
     }

@@ -3,8 +3,14 @@ import userModel from "../models/user.js";
 import jwt from "jsonwebtoken";
 import { createAccessToken, createRefreshToken } from "./jwtToken.js";
 import dotenv from "dotenv";
+import path from "path";
+import * as url from "url";
+
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+const envPath = path.join(__dirname, "../../.env");
+
 dotenv.config({
-  path: "C:/Users/hp/Documents/study/OwnStudy/Projects/NoteApp/server/.env",
+  path: envPath,
 });
 
 const userResponse = async (res, userid) => {
@@ -13,6 +19,7 @@ const userResponse = async (res, userid) => {
   res.cookie("apiauth", refresh, {
     httpOnly: true,
     secure: false,
+    maxAge: 24 * 60 * 60 * 5 * 1000,
   });
   res.set("authentication", access);
   res.status(200).send({ message: "authentication successful" });
@@ -52,11 +59,11 @@ const login = async (req, res) => {
 const refresh = async (req, res) => {
   const clientToken = req.cookies.apiauth;
   let payload = null;
-  if (!clientToken) return res.status(401).send();
+  if (!clientToken) return res.status(401).send("no token");
   try {
     payload = jwt.verify(clientToken, process.env.REFRESH_TOKEN_KEY);
   } catch (err) {
-    return res.status(401).send();
+    return res.status(401).send("token is forged");
   }
   userResponse(res, payload.userid);
 };
