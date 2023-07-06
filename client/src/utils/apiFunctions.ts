@@ -119,7 +119,6 @@ export const apiTagUpdateOrCreate = async (
       }
     );
   } catch (error) {
-    console.log(error);
     navigate("/", { state: true });
   }
 };
@@ -170,7 +169,6 @@ export const ReplaceTags = async (
     );
     navigate(0);
   } catch (error) {
-    console.log(error);
     navigate("/", { state: true });
   }
 };

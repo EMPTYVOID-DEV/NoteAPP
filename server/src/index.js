@@ -15,7 +15,6 @@ const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 const envPath = path.join(__dirname, "../.env");
 const logFilePath = path.join(__dirname, "serverLogs.txt");
 const imagesPath = path.join(__dirname, "../images");
-const buildPath = path.join(__dirname, "../../client/dist");
 
 dotenv.config({
   path: envPath,
@@ -64,4 +63,4 @@ app.use("/api/auth", auth);
 
 app.use("/api/user", verify, user);
 
-app.use("/", express.static(buildPath));
+app.use("/", (req, res) => res.send("working"));

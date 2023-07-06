@@ -4,7 +4,7 @@ import HomeProxy from "./pages/home/HomeProxy";
 import ShowNote from "./pages/ShowNote/ShowNote";
 import SecureRoute from "./secureRoute";
 import Auth from "./pages/auth/auth";
-import NewOrEdit from "./pages/NewOrEdit/newOrEdit";
+import NewOrEdit from "./pages/NewOrEdit/modify";
 
 function App() {
   return (

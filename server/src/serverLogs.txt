@@ -4,3 +4,7 @@ server start listening at localhost:5020 on Wed Jul 05 2023 21:39:30 GMT+0200 (C
 server start listening at localhost:5020 on Wed Jul 05 2023 23:08:44 GMT+0200 (Central European Summer Time) 
 server start listening at localhost:5020 on Wed Jul 05 2023 23:11:04 GMT+0200 (Central European Summer Time) 
 server start listening at localhost:5020 on Wed Jul 05 2023 23:15:20 GMT+0200 (Central European Summer Time) 
+unable to connect to atlas database because of Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.8jzvzph.mongodb.net on Thu Jul 06 2023 17:18:11 GMT+0200 (Central European Summer Time) 
+server start listening at localhost:5020 on Thu Jul 06 2023 17:24:44 GMT+0200 (Central European Summer Time) 
+server start listening at localhost:5020 on Thu Jul 06 2023 17:24:55 GMT+0200 (Central European Summer Time) 
+server start listening at localhost:5020 on Thu Jul 06 2023 17:34:41 GMT+0200 (Central European Summer Time) 

@@ -73,7 +73,7 @@
     & > .img {
       width: 100%;
       height: 100%;
-      background-image: url("C:/Users/hp/Documents/study/OwnStudy/Projects/NoteApp/client/src/assets/woods2.jpg");
+      background-image: url("../../assets/woods.jpg");
       background-position: center;
       background-size: 300%;
       filter: hue-rotate(80deg) contrast(0.8);

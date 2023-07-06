@@ -22,6 +22,7 @@ export default function EditTags({
     );
 
     if (token) {
+      SetAppearence(false);
       ReplaceTags(new Map(newTags), token, navigate);
     }
   };

@@ -1,14 +1,14 @@
 @font-face {
   font-family: StreetWear;
-  src: url("C:/Users/hp/Documents/study/OwnStudy/Projects/NoteApp/client/src/assets/Streetwear.ttf");
+  src: url("./assets/Streetwear.ttf");
 }
 @font-face {
   font-family: Rockybilly;
-  src: url("C:/Users/hp/Documents/study/OwnStudy/Projects/NoteApp/client/src/assets/Rockybilly.ttf");
+  src: url("./assets/Rockybilly.ttf");
 }
 @font-face {
   font-family: stylish;
-  src: url("C:/Users/hp/Documents/study/OwnStudy/Projects/NoteApp/client/src/assets/stylish.ttf");
+  src: url("./assets/stylish.ttf");
 }
 
 body {
