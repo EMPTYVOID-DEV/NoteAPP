@@ -56,6 +56,7 @@ export const refreshToken = async (
         withCredentials: true,
       });
       newtoken = res.headers["authentication"];
+      console.log(newtoken)
       update(newtoken);
     } catch (error) {
       navigate("/", { state: true });
