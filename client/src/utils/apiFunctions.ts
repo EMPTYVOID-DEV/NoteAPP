@@ -1,6 +1,8 @@
 import axios from "axios";
 import { note } from "./types";
 
+axios.defaults.withCredentials = true;
+
 type res = {
   message: string;
   status: number;
@@ -52,9 +54,7 @@ export const refreshToken = async (
   let newtoken: string = token;
   if (hasExpired()) {
     try {
-      const res = await axios.get("/api/auth/refresh", {
-        withCredentials: true,
-      });
+      const res = await axios.get("/api/auth/refresh");
       newtoken = res.headers["authentication"];
       update(newtoken);
     } catch (error) {
@@ -79,7 +79,7 @@ export const getNotes = async (
     noteIntail(new Map(Object.entries(data.notes)));
     tagIntail(new Map(Object.entries(data.tags)));
   } catch (error) {
-    navigate("/", { state: true });
+    navigate("/503", { state: true });
   }
 };
 export const apiNoteUpdateorCreate = async (
@@ -101,7 +101,7 @@ export const apiNoteUpdateorCreate = async (
       },
     });
   } catch (error) {
-    navigate("/", { state: true });
+    navigate("/503", { state: true });
   }
 };
 export const apiTagUpdateOrCreate = async (
@@ -119,7 +119,7 @@ export const apiTagUpdateOrCreate = async (
       }
     );
   } catch (error) {
-    navigate("/", { state: true });
+    navigate("/503", { state: true });
   }
 };
 export const apiTagDelete = async (
@@ -134,7 +134,7 @@ export const apiTagDelete = async (
     });
     delet(key);
   } catch (error) {
-    navigate("/", { state: true });
+    navigate("/503", { state: true });
   }
 };
 export const apiNoteDelete = async (
@@ -148,7 +148,7 @@ export const apiNoteDelete = async (
       headers: { authentication: `bearer ${token}` },
     });
   } catch (error) {
-    navigate("/", { state: true });
+    navigate("/503", { state: true });
   }
 };
 
@@ -169,6 +169,6 @@ export const ReplaceTags = async (
     );
     navigate(0);
   } catch (error) {
-    navigate("/", { state: true });
+    navigate("/503", { state: true });
   }
 };

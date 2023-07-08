@@ -3,8 +3,8 @@ import { Routes, Route, useNavigate } from "react-router";
 import HomeProxy from "./pages/home/HomeProxy";
 import ShowNote from "./pages/ShowNote/ShowNote";
 import SecureRoute from "./secureRoute";
-import Auth from "./pages/auth/auth";
 import NewOrEdit from "./pages/NewOrEdit/modify";
+import ErrorHandler from "./pages/Error/error";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
           <Route path="edit" element={<NewOrEdit isEdit={true} />} />
         </Route>
       </Route>
-      <Route path="*" element={<Auth />} />
+      <Route path="*" element={<ErrorHandler />} />
     </Routes>
   );
 }
