@@ -56,6 +56,7 @@ export const refreshToken = async (
     try {
       const res = await axios.get("/api/auth/refresh");
       newtoken = res.headers["authentication"];
+      console.log(newtoken)
       update(newtoken);
     } catch (error) {
       navigate("/", { state: true });
